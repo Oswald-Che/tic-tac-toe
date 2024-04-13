@@ -18,7 +18,7 @@ class Game
       puts "player #{player}'s turn"
       @board.input(get_input, check_sigil(player))
       @board.display_board
-      break if game_end
+      break if game_end(player)
 
       player = swap_player(player)
     end
@@ -41,8 +41,17 @@ class Game
     input.to_i - 1
   end
 
-  def game_end
-    @board.game_full? || @board.game_win?
+  def game_end(player)
+    if @board.full?
+      puts 'Board is full, No space left'
+      puts 'Result is DRAW'
+      puts 'Game Over!!!'
+      return true
+    elsif @board.game_win
+      puts "congratulations for Player #{player} for winning the game"
+      puts 'Game Over'
+      return true
+    end
   end
 
 end

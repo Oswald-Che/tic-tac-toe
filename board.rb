@@ -2,6 +2,8 @@ class Board
 
   def initialize
     @board = Array.new(9, ' ')
+    @winning_set = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 6], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
+    @moves_played = []
   end
 
   def display_tutorial
@@ -15,8 +17,19 @@ class Board
     end
   end
 
+  def game_win?
+    won = false
+    @winning_set.each do |set|
+      if (moves_played & set) == set
+        won = true
+      end
+    end
+    won
+  end
+
   def input(number, sigil)
     @board[number] = sigil
+    @moves_played.push[number]
   end
 
   def check_input?(number)
