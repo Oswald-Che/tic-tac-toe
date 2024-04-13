@@ -15,9 +15,16 @@ class Board
     end
   end
 
+  def input(number, sigil)
+    @board[number] = sigil
+  end
+
+  def check_input?(number)
+    @board[number] == ' '
+  end
+
+  def full?
+    @board.none?
+  end
+  
 end
-
-board = Board.new
-
-board.display_tutorial
-board.display_board
