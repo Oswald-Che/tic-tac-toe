@@ -34,7 +34,7 @@ class Game
 
   def get_input
     input = gets.chomp
-    unless input.match?(/[1-9]/)
+    unless input.match?(/[1-9]/) && @board.check_input?(input.to_i)
       puts 'Please input a number between 1 to 9'
       input = get_input
     end
@@ -47,7 +47,7 @@ class Game
       puts 'Result is DRAW'
       puts 'Game Over!!!'
       return true
-    elsif @board.game_win
+    elsif @board.game_win?
       puts "congratulations for Player #{player} for winning the game"
       puts 'Game Over'
       return true
@@ -55,3 +55,7 @@ class Game
   end
 
 end
+
+game = Game.new
+game.introduction
+game.play

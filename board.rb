@@ -20,7 +20,7 @@ class Board
   def game_win?
     won = false
     @winning_set.each do |set|
-      if (moves_played & set) == set
+      if (@moves_played & set) == set
         won = true
       end
     end
@@ -29,15 +29,15 @@ class Board
 
   def input(number, sigil)
     @board[number] = sigil
-    @moves_played.push[number]
+    @moves_played.push(number)
   end
 
   def check_input?(number)
-    @board[number] == ' '
+    @board[number - 1] == ' '
   end
 
   def full?
-    @board.none?
+    @board.none?(' ')
   end
   
 end
