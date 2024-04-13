@@ -24,5 +24,25 @@ class Game
     end
   end
 
+  def check_player(player)
+    player == 1 ? 2 : 1
+  end
+
+  def check_sigil(player)
+    player == 1 ? 'O' : 'X'
+  end
+
+  def get_input
+    input = gets.chomp
+    unless input.match?(/[1-9]/)
+      puts 'Please input a number between 1 to 9'
+      input = get_input
+    end
+    input
+  end
+
 end
 
+game = Game.new
+var = game.get_input
+puts var
