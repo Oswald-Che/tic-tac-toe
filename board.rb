@@ -2,7 +2,7 @@ class Board
 
   def initialize
     @board = Array.new(9, ' ')
-    @winning_set = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
+    @winning_set = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, ], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
     @player1_moves = []
     @player2_moves = []
   end
@@ -21,7 +21,7 @@ class Board
   def game_win?
     won = false
     @winning_set.each do |set|
-      if (@player1_moves & set) == set || (@player2_moves & set) == set
+      if (@player1_moves & set).sort == set || (@player2_moves & set).sort == set
         won = true
       end
     end

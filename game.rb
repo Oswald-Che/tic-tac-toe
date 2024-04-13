@@ -35,7 +35,7 @@ class Game
   def get_input
     input = gets.chomp
     unless input.match?(/[1-9]/) && @board.check_input?(input.to_i)
-      puts "Please input a number between 1 to 9\n or choose an empty square"
+      puts "Please input a number between 1 to 9\nor choose an empty square\n"
       return get_input
     end
     input.to_i - 1
