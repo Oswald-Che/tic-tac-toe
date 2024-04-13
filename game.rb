@@ -15,7 +15,7 @@ class Game
   def play
     player = 1
     loop do
-      puts "player #{player}'s turn"
+      puts "\nplayer #{player}'s turn"
       @board.input(get_input, check_sigil(player))
       @board.display_board
       break if game_end(player)
@@ -35,21 +35,21 @@ class Game
   def get_input
     input = gets.chomp
     unless input.match?(/[1-9]/) && @board.check_input?(input.to_i)
-      puts 'Please input a number between 1 to 9'
-      input = get_input
+      puts "Please input a number between 1 to 9\n or choose an empty square"
+      return get_input
     end
     input.to_i - 1
   end
 
   def game_end(player)
-    if @board.full?
+    if @board.game_win?
+      puts "congratulations for Player #{player} for winning the game"
+      puts 'Game Over'
+      return true
+    elsif @board.full?
       puts 'Board is full, No space left'
       puts 'Result is DRAW'
       puts 'Game Over!!!'
-      return true
-    elsif @board.game_win?
-      puts "congratulations for Player #{player} for winning the game"
-      puts 'Game Over'
       return true
     end
   end
