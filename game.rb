@@ -15,21 +15,21 @@ class Game
   def play
     player = 1
     loop do
-      puts "player #{var}'s turn"
-      @board.input(get_input, check_sigil(var))
+      puts "player #{player}'s turn"
+      @board.input(get_input, check_sigil(player))
       @board.display_board
       break if game_end
 
-      player = check_player(player)
+      player = swap_player(player)
     end
   end
 
-  def check_player(player)
+  def swap_player(player)
     player == 1 ? 2 : 1
   end
 
   def check_sigil(player)
-    player == 1 ? 'O' : 'X'
+    player == 1 ? 'X' : 'O'
   end
 
   def get_input
@@ -38,11 +38,11 @@ class Game
       puts 'Please input a number between 1 to 9'
       input = get_input
     end
-    input
+    input.to_i - 1
+  end
+
+  def game_end
+    @board.game_full? || @board.game_win?
   end
 
 end
-
-game = Game.new
-var = game.get_input
-puts var
