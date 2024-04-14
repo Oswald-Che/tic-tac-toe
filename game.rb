@@ -5,6 +5,11 @@ class Game
     @board = Board.new
   end
 
+  def start
+    introduction
+    play
+  end
+
   def introduction
     puts 'Welcome to Tic Tac toe'
     puts 'Player 1 is X and Player 2 is O'
@@ -35,7 +40,7 @@ class Game
   def get_input
     input = gets.chomp
     unless input.match?(/[1-9]/) && @board.check_input?(input.to_i)
-      puts "Please input a number between 1 to 9\nor choose an empty square\n"
+      puts "Please input a number between 1 to 9\nOr choose an empty square\n"
       return get_input
     end
     input.to_i - 1
@@ -43,7 +48,7 @@ class Game
 
   def game_end(player)
     if @board.game_win?
-      puts "congratulations for Player #{player} for winning the game"
+      puts "congratulations to Player #{player} for winning the game"
       puts 'Game Over'
       return true
     elsif @board.full?
@@ -55,7 +60,3 @@ class Game
   end
 
 end
-
-game = Game.new
-game.introduction
-game.play
