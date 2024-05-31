@@ -30,9 +30,47 @@ describe Board do
       end
     end
 
-    
+    context 'when all possible wins are tested' do
+      possible_wins = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
+      it 'all returns true' do
+        possible_wins.each do |win|
+          expect(described_class.new(win)).to be_game_win
+        end
+      end
+    end
+
+
   end
 
+  describe '#input' do
+    subject(:board_input) { described_class.new}
+    context 'when sigil is X' do
+      it 'Add X to player 1\'s moves' do
+        sigil = 'X'
+        number = 3
+        expect { board_input.input(number, sigil) }.to change { board_input.instance_variable_get(:@player1_moves).length }.by(1)
+      end
 
+      it 'replaces Add sigil in board' do
+        sigil = 'X'
+        number = 3
+        expect { board_input.input(number, sigil) }.to change { board_input.instance_variable_get(:@board)[number] }.to(sigil)
+      end
+    end
+
+    context 'when sigil is O' do
+      it 'Add O to player 2\'s moves' do
+        sigil = 'O'
+        number = 3
+        expect { board_input.input(number, sigil) }.to change { board_input.instance_variable_get(:@player2_moves).length }.by(1)
+      end
+
+      it 'replaces Add sigil in board' do
+        sigil = 'X'
+        number = 3
+        expect { board_input.input(number, sigil) }.to change { board_input.instance_variable_get(:@board)[number] }.to(sigil)
+      end
+    end
+  end
 
 end
