@@ -1,10 +1,10 @@
 class Board
 
-  def initialize
-    @board = Array.new(9, ' ')
-    @winning_set = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
-    @player1_moves = []
-    @player2_moves = []
+  def initialize( player1 = [], player2 = [], board = Array.new(9, ' '))
+    @board = board
+    @winning_set = set
+    @player1_moves = player1
+    @player2_moves = player2
   end
 
   def display_tutorial
@@ -39,6 +39,10 @@ class Board
 
   def full?
     @board.none?(' ')
+  end
+
+  def set
+    [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
   end
   
 end
