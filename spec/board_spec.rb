@@ -51,7 +51,7 @@ describe Board do
         expect { board_input.input(number, sigil) }.to change { board_input.instance_variable_get(:@player1_moves).length }.by(1)
       end
 
-      it 'replaces Add sigil in board' do
+      it 'Add sigil in board' do
         sigil = 'X'
         number = 3
         expect { board_input.input(number, sigil) }.to change { board_input.instance_variable_get(:@board)[number] }.to(sigil)
@@ -65,12 +65,48 @@ describe Board do
         expect { board_input.input(number, sigil) }.to change { board_input.instance_variable_get(:@player2_moves).length }.by(1)
       end
 
-      it 'replaces Add sigil in board' do
+      it 'Add sigil in board' do
         sigil = 'X'
         number = 3
         expect { board_input.input(number, sigil) }.to change { board_input.instance_variable_get(:@board)[number] }.to(sigil)
       end
     end
   end
+  describe '#check_input' do
+    context 'When board postion is empty' do
+      subject(:board_check) { described_class.new}
 
+      it 'returns true' do
+        num = 4
+        expect(board_check.check_input?(num)).to be true
+      end
+    end
+
+    context 'When board postion is filled' do
+      let(:board) { ['X', 'O', 'X', 'O']}
+      subject(:board_check) { described_class.new([], [], board)}
+
+      it 'returns false' do
+        num = 3
+        expect(board_check.check_input?(num)).to be false
+      end
+    end
+  end
+
+  describe '#full?' do
+    context 'When board is empty' do
+      subject(:board_full) { described_class.new }
+      it 'is not full' do
+        expect(board_full).not_to be_full
+      end
+    end
+
+    context 'When board is filled' do
+      let (:board) { %w[O X X X X O O O X] }
+      subject(:board_full) { described_class.new([], [], board) }
+      it 'is full' do
+        expect(board_full).to be_full
+      end
+    end
+  end
 end
