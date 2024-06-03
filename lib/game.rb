@@ -1,13 +1,17 @@
 require_relative 'board.rb'
 
 class Game
-  def initialize
-    @board = Board.new
+  attr_reader :player
+
+  def initialize(board = Board.new, player = 1)
+    @board = board
+    @player = player
   end
 
   def start
     introduction
-    play
+    play until game_end
+    final_message
   end
 
   def introduction
@@ -18,45 +22,50 @@ class Game
   end
 
   def play
-    player = 1
-    loop do
-      puts "\nplayer #{player}'s turn"
-      @board.input(get_input, check_sigil(player))
-      @board.display_board
-      break if game_end(player)
-
-      player = swap_player(player)
-    end
+    puts "\nplayer #{player}'s turn"
+    @board.input(get_input(input), check_sigil)
+    @board.display_board
+    swap_player
   end
 
-  def swap_player(player)
-    player == 1 ? 2 : 1
+  def swap_player
+    @player == 1 ? 2 : 1
   end
 
-  def check_sigil(player)
+  def check_sigil
     player == 1 ? 'X' : 'O'
   end
 
-  def get_input
-    input = gets.chomp
-    unless input.match?(/[1-9]/) && @board.check_input?(input.to_i)
-      puts "Please input a number between 1 to 9\nOr choose an empty square\n"
-      return get_input
-    end
-    input.to_i - 1
+  def get_input(number)
+    return number.to_i - 1 if verify_input(number)
+
+    puts "Please input a number between 1 to 9\nOr choose an empty square\n"
+    get_input(input)
   end
 
-  def game_end(player)
+  def verify_input(number)
+    number.match?(/^[1-9]$/) && @board.check_input?(number.to_i)
+  end
+
+  def game_end
+    @board.full? || @board.game_win
+  end
+
+  def final_message
     if @board.game_win?
       puts "congratulations to Player #{player} for winning the game"
       puts 'Game Over'
-      return true
     elsif @board.full?
       puts 'Board is full, No space left'
       puts 'Result is DRAW'
       puts 'Game Over!!!'
-      return true
     end
+  end
+
+  private
+
+  def input
+    gets.chomp
   end
 
 end
