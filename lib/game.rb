@@ -3,7 +3,7 @@ require_relative 'board.rb'
 class Game
   attr_reader :player
 
-  def initialize(board = Board.new, player = 1)
+  def initialize(board = Board.new, player = nil)
     @board = board
     @player = player
   end
@@ -22,14 +22,14 @@ class Game
   end
 
   def play
+    swap_player
     puts "\nplayer #{player}'s turn"
     @board.input(get_input, check_sigil)
     @board.display_board
-    swap_player
   end
 
   def swap_player
-    @player == 1 ? 2 : 1
+    @player = @player != 1 ? 1 : 2
   end
 
   def check_sigil
