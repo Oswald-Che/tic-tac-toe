@@ -109,6 +109,37 @@ describe Game do
       end
     end
   end
+  describe '#get_input' do
+    context 'when user inputs a valid number' do
+      subject(:game_input) { described_class.new }
 
+      before do 
+        valid_input = '5'
+        allow(game_input).to receive(:input).and_return(valid_input)
+      end
+
+      it 'doesn\'t display error message' do
+        expect(game_input).not_to receive(:puts)
+        game_input.get_input
+      end
+    end
+
+    context 'when user inputs an invalid number, then a valid number' do
+      subject(:game_input) { described_class.new }
+
+      before do
+        letter = 's'
+        valid_input = '5'
+        allow(game_input).to receive(:input).and_return(letter, valid_input)
+      end
+
+      it 'displays error message once' do
+        expect(game_input).to receive(:puts).once
+        game_input.get_input
+      end
+    end
+  end
+
+  
   
 end
