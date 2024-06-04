@@ -23,7 +23,7 @@ class Game
 
   def play
     puts "\nplayer #{player}'s turn"
-    @board.input(get_input(input), check_sigil)
+    @board.input(get_input, check_sigil)
     @board.display_board
     swap_player
   end
@@ -36,11 +36,12 @@ class Game
     player == 1 ? 'X' : 'O'
   end
 
-  def get_input(number)
+  def get_input
+    number = input
     return number.to_i - 1 if verify_input(number)
 
     puts "Please input a number between 1 to 9\nOr choose an empty square\n"
-    get_input(input)
+    get_input
   end
 
   def verify_input(number)
@@ -48,7 +49,7 @@ class Game
   end
 
   def game_end
-    @board.full? || @board.game_win
+    @board.full? || @board.game_win?
   end
 
   def final_message
