@@ -160,4 +160,41 @@ describe Game do
     end
   end
   
+  describe '#final message' do
+    context 'when the game is won' do
+      let(:player) { 1 }
+      let(:board) { instance_double(Board) }
+      subject(:game_message) { described_class.new(board, player) }
+
+      it 'outputs the correct message' do
+        allow(board).to receive(:game_win?).and_return(true)
+        message1 = "congratulations to Player #{player} for winning the game"
+        message2 = 'Game Over'
+        expect(game_message).to receive(:puts).with(message1)
+        expect(game_message).to receive(:puts).with(message2)
+        game_message.final_message
+      end
+    end
+    context 'when the game board is full' do
+      let(:board) { instance_double(Board) }
+      subject(:game_message) { described_class.new(board) }
+
+      before do
+        allow(board).to receive(:game_win?).and_return(false)
+        allow(board).to receive(:full?).and_return(true)
+      end
+
+      it 'outputs the correct message' do
+        
+        message1 = 'Board is full, No space left'
+        message2 = 'Result is DRAW'
+        message3 = 'Game Over!!!'
+        expect(game_message).to receive(:puts).with(message1)
+        expect(game_message).to receive(:puts).with(message2)
+        expect(game_message).to receive(:puts).with(message3)
+        game_message.final_message
+      end
+    end
+  end
+  
 end
